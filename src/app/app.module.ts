@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormsModule } from '@angular/forms';
+import { NgxBootstrapIconsModule, exclamationTriangle } from 'ngx-bootstrap-icons';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    NgxBootstrapIconsModule.pick({exclamationTriangle})
   ],
   providers: [],
   bootstrap: [AppComponent]
