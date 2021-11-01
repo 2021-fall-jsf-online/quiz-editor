@@ -1,14 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from './quiz.service';
-
-interface QuizDisplay {
-  quizName: string;
-  quizQuestions: QuestionDisplay[];
-}
-
-interface QuestionDisplay {
-  questionName: string;
-}
+import { QuizService, QuizFromWeb, QuizDisplay } from './quiz.service';
 
 @Component({
   selector: 'app-root',
@@ -27,12 +18,21 @@ export class AppComponent implements OnInit {
     const quizzes = this.quizSvc.loadQuizzes();
     console.log(quizzes);
 
-    this.quizzes = quizzes.map(x => ({
-      quizName: x.name
-      , quizQuestions: x.questions.map((y: any) => ({
-        questionName: y.name
+    quizzes.subscribe(
+      (data: QuizFromWeb[]) =>  this.quizzes = data.map(x => ({
+        quizName: x.name
+        , quizQuestions: x.questions.map(y => ({
+          questionName: y.name
+        }))
       }))
-    }));
+      
+      // (data: QuizDisplay[]) => this.quizzes = data
+      
+      , err => {
+        console.error(err);
+        this.errorLoadingQuizzes = true;
+      }
+    );
 
     console.log(this.quizzes);
   }
@@ -59,4 +59,6 @@ export class AppComponent implements OnInit {
 
     this.selectedQuiz = newQuiz;
   };
+
+  errorLoadingQuizzes = false;
 }
