@@ -63,25 +63,21 @@
             Add New Question
           </button>
           <div 
-            class="row mt-3"
+            class="d-flex justify-content-between mt-3"
             *ngFor="let question of selectedQuiz.quizQuestions"
           >
-            <div class="col-md-10">
-              <input 
-                type="text"
-                [(ngModel)]="question.questionName"
-                class="form-control"
-                placeholder="Enter question text"
-              />
-            </div>
-            <div class="col-md-2">
-              <button 
-                class="btn btn-link text-danger"
-                (click)="removeQuestion(question)"
-              >
-                Remove
-              </button>
-            </div>
+            <input 
+              type="text"
+              [(ngModel)]="question.questionName"
+              class="form-control"
+              placeholder="Enter question text"
+            />
+            <button 
+              class="btn btn-link text-danger"
+              (click)="removeQuestion(question)"
+            >
+              Remove
+            </button>
           </div>
         </div>
       </div>
