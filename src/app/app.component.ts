@@ -47,16 +47,17 @@ export class AppComponent implements OnInit {
   };
 
   addNewQuiz = () => {
+    // Create newQuiz object literal
     const newQuiz = {
       quizName: "Untitled Quiz"
       , quizQuestions: []
     };
-
+    // Reassigns this.quizzes to all quizzes plus new quiz
     this.quizzes = [
       ...this.quizzes
       , newQuiz
     ];
-
+    // Selects new quiz
     this.selectedQuiz = newQuiz;
   }
 
