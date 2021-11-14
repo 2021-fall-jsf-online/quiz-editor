@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { QuizService, QuizFromWeb } from './quiz.service';
 
 interface QuizDisplay {
@@ -99,4 +100,52 @@ export class AppComponent implements OnInit {
       this.selectedQuiz.quizQuestions = this.selectedQuiz.quizQuestions.filter(x => x !== questionToRemove);
     }
   };
+
+  jsPromisesOne = () => {
+    const n = this.quizSvc.getMagicNumber(true);
+    console.log(n);
+    n.then(
+      number => {
+        console.log(number);
+
+        const n2 = this.quizSvc.getMagicNumber(true);
+        console.log(n2);
+        n2.then(x => console.log(x)).catch(e => console.error(e));
+      }
+    ).catch(
+      err => {
+        console.error(err);
+      }
+    )
+  }
+
+  jsPromisesTwo = async () => {
+    try{
+    const x = await this.quizSvc.getMagicNumber(true);
+    console.log(x);
+
+    const y = await this.quizSvc.getMagicNumber(true);
+    console.log(y);
+    }
+    catch(err) {
+      console.error(err);
+    }
+  }
+
+  jsPromisesThree = async () => {
+    try{
+    const x = this.quizSvc.getMagicNumber(true);
+    console.log(x);
+
+    const y = this.quizSvc.getMagicNumber(true);
+    console.log(y);
+
+    const results = await Promise.all([x , y]);
+    //const results = await Promise.race([x, y]);
+    console.log(results);
+    }
+    catch(err) {
+      console.error(err);
+    }
+  }
 }
