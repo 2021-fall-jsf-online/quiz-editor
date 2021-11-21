@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-interface QuizFromWeb {
+export interface QuizFromWeb {
   name: string;
   questions: {
     name: string;
