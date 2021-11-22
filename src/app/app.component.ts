@@ -10,7 +10,6 @@ interface QuestionDisplay{
 }
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit {
   };
 
    addNewQuiz = () => {
-    let p = prompt("name");
+     
     const newQuiz = {
       quizName:"Week#10-n-tell"
       , quizQuestions: []
