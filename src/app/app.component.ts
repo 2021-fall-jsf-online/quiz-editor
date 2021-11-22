@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
   ) {
   }
 
+  loadingQuizzes = false;
+
   errorLoadingQuizzes = false;
 
   loadQuizzesFromCloud = async () => {
