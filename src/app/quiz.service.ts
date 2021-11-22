@@ -17,15 +17,25 @@ export class QuizService {
     private angularHttpClient: HttpClient
      ) { }
 
+     //observable
+  // loadQuizzes = () => {
+
+  //   const quizzesFromWeb = this.angularHttpClient.get<QuizFromWeb[]>(
+  //     "https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Tom%20Steele"
+  //   );
+
+  //   return quizzesFromWeb;
+  // };
+
+  //promise
   loadQuizzes = () => {
 
     const quizzesFromWeb = this.angularHttpClient.get<QuizFromWeb[]>(
       "https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Tom%20Steele"
-    );
+    ).toPromise();
 
     return quizzesFromWeb;
   };
-
 
   getMagicNumber = (callerWantsToSucceed: boolean): Promise<number> => {
     return new Promise<number>(
