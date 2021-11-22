@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from './quiz.service';
+import { QuizService, QuizFromWeb } from './quiz.service';
 
 interface QuizDisplay {
   quizName: string;
@@ -28,7 +28,7 @@ errorLoadingQuizzes = false;
     console.log(quizzes);
 
     quizzes.subscribe(
-      (data) => {
+      (data: QuizFromWeb[]) => {
         console.log(data);
         this.quizzes = data.map((x) => ({
           quizName: x.name,
