@@ -17,7 +17,6 @@ interface QuestionDisplay{
 })
 export class AppComponent implements OnInit {
   title = 'quiz-editor';
-
   constructor(
     public quizSvc: QuizService 
   ) {
@@ -49,7 +48,8 @@ export class AppComponent implements OnInit {
   };
 
    addNewQuiz = () => {
-     
+    //  como fazer esse prompt ser o conteudo da propriedade quizName
+    // let x=prompt("enter");
     const newQuiz = {
       quizName:"Week#10-n-tell"
       , quizQuestions: []
@@ -61,5 +61,23 @@ export class AppComponent implements OnInit {
     ];
 
     this.selectedQuiz = newQuiz;
+    // this.selectedQuiz = (this.quizzes[this.quizzes.length]);
+
   };
+    addNewQuestions = () => {
+    if (this.selectedQuiz) {
+      this.selectedQuiz.quizQuestions=[
+        ...this.selectedQuiz.quizQuestions
+        ,{
+          questionName: "Untitle Question"
+        }
+      ];
+    }
+    };
+    removeQuestions (questionToremove: QuestionDisplay) {
+      if(this.selectedQuiz){
+      this.selectedQuiz.quizQuestions= this.selectedQuiz.quizQuestions.filter(x=>x!==questionToremove);
+      }
+
+    };
 }
