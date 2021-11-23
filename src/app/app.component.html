@@ -21,7 +21,8 @@ class="row"
   </div>
   <div 
     class="row"
-    *ngIf="!errorLoadingQuizzes"
+    *ngIf=" !initialLoad &&
+    !errorLoadingQuizzes"
   >
     <div class="col-md-4">
       <button 
