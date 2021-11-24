@@ -67,6 +67,11 @@ class="row"
           *ngIf="addedQuizCount > 0">
             +{{ addedQuizCount }}
           </span>
+          <span 
+          class="badge badge-light ml-1"
+          *ngIf="editedQuizCount > 0">
+            *{{ editedQuizCount }}
+          </span>
         </button>
         <button 
         class="btn btn-link"
