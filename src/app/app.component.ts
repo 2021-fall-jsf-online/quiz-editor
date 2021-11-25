@@ -33,6 +33,8 @@ export class AppComponent implements OnInit {
         questionName: y.name
       }))
     }))
+
+    console.log(this.quizzes);
   }
   
   quizzes: QuizDisplay[] = [];
