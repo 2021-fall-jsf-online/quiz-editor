@@ -4,9 +4,6 @@
     *ngIf="loading"
   >
     <div class="col-md-12">
-      <div class="alert alert-dark mt-3">
-        <b>Loading...</b>
-      </div>
     </div>
   </div>
   <div 
@@ -159,3 +156,17 @@
       </div>
     </div>
   </div>
+  <ngx-spinner 
+    bdColor="rgba(0, 0, 0, 0.8)" 
+    size="default" 
+    color="#fff" 
+    type="ball-spin-clockwise" 
+    [fullScreen]="true"
+    *ngIf="loading"
+  >
+    <p 
+      style="color: white"
+    >
+      Loading... 
+    </p>
+</ngx-spinner>  

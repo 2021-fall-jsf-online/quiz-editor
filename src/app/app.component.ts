@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService, QuizFromWeb } from './quiz.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 interface QuizDisplay {
   quizName: string;
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public quizSvc: QuizService
+    , private spinner: NgxSpinnerService
   ) {
   }
 
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit {
 
     try {
       this.loading = true;
+      this.spinner.show();
 
       const quizzes = await this.quizSvc.loadQuizzes();
       console.log(quizzes);
@@ -44,12 +47,14 @@ export class AppComponent implements OnInit {
       }));      
 
       this.loading = false;
+      this.spinner.hide();
     }
     catch (err) {
       console.error(err);
       this.errorLoadingQuizzes = true;
       this.loading = false;      
-    }
+      this.spinner.hide();
+     }
   };
 
   ngOnInit() {
