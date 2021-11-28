@@ -64,9 +64,9 @@
           </span>
         <span 
             class="badge badge-success ml-1"
-            *ngIf="newlyAddedQuiz"
+            *ngIf="addedQuizCount > 0"
           > 
-
+            +{{ addedQuizCount }}
           </span>
         </button>
         <button 

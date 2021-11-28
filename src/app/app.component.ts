@@ -168,5 +168,13 @@ export class AppComponent implements OnInit {
 
   get deletedQuizCount() {
     return this.getDeletedQuizzes().length;
-  };
+  }
+
+  getAddedQuizzes = () => {
+    return this.quizzes.filter(x => x.newlyAddedQuiz && !x.markedForDelete);
+  }
+
+  get addedQuizCount() {
+    return this.getAddedQuizzes().length;
+  }
 }
