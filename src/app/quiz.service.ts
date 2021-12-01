@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-interface QuizFromWeb {
+export interface QuizFromWeb {
   name: string;
   questions:  {
     name: string;
@@ -20,7 +20,7 @@ export class QuizService {
   loadQuizzes = () => {
 
     const quizzesFromWeb = this.angularHttpClient.get<QuizFromWeb[]>(
-      'https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Mystery%20Quiz'
+      'https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Mike%20Barnett'
       );
 
     return quizzesFromWeb;
