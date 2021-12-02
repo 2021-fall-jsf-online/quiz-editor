@@ -6,8 +6,8 @@ import {
   transition,
   animate,
   keyframes,
-  style
-} from "@angular/animations";
+  style,
+} from '@angular/animations';
 
 interface QuizDisplay {
   quizName: string;
@@ -28,65 +28,78 @@ interface QuestionDisplay {
   animations: [
     trigger('detailsFromLeft', [
       transition('leftPosition => finalPosition', [
-        animate('300ms', keyframes([
-          style({ left: '-30px', offset: 0.0 }),
-          style({ left: '-20px', offset: 0.25 }),
-          style({ left: '-10px', offset: 0.5 }),
-          style({ left: '-5px', offset: 0.75 }),
-          style({ left: '0px', offset: 1.0 })
-        ]))
+        animate(
+          '300ms',
+          keyframes([
+            style({ left: '-30px', offset: 0.0 }),
+            style({ left: '-20px', offset: 0.25 }),
+            style({ left: '-10px', offset: 0.5 }),
+            style({ left: '-5px', offset: 0.75 }),
+            style({ left: '0px', offset: 1.0 }),
+          ])
+        ),
       ]),
     ]),
     trigger('pulseSaveCancelButtons', [
       transition('nothingToSave => somethingToSave', [
-        animate('400ms', keyframes([
-          style({ transform: 'scale(1.0)', 'transform-origin': 'top left', offset: 0.0 }),
-          style({ transform: 'scale(1.2)', 'transform-origin': 'top left', offset: 0.5 }),
-          style({ transform: 'scale(1.0)', 'transform-origin': 'top left', offset: 1.0 })
-        ]))
-      ])
-    ])
-  ]
+        animate(
+          '400ms',
+          keyframes([
+            style({
+              transform: 'scale(1.0)',
+              'transform-origin': 'top left',
+              offset: 0.0,
+            }),
+            style({
+              transform: 'scale(1.2)',
+              'transform-origin': 'top left',
+              offset: 0.5,
+            }),
+            style({
+              transform: 'scale(1.0)',
+              'transform-origin': 'top left',
+              offset: 1.0,
+            }),
+          ])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AppComponent implements OnInit {
   title = 'quiz-editor';
 
-  constructor(
-    public quizSvc: QuizService
-  ) {
-  }
+  constructor(public quizSvc: QuizService) {}
 
   loading = true;
   errorLoadingQuizzes = false;
 
   generateNaiveQuizChecksum = (quiz: QuizFromWeb) => {
-    return quiz.name + quiz.questions.map(x => '~' + x.name).join('');
+    return quiz.name + quiz.questions.map((x) => '~' + x.name).join('');
   };
 
   loadQuizzesFromCloud = async () => {
-
     try {
       this.loading = true;
 
       const quizzes = await this.quizSvc.loadQuizzes();
       console.log(quizzes);
 
-      this.quizzes = quizzes.map(x => ({
-        quizName: x.name
-        , quizQuestions: x.questions.map(y => ({
-          questionName: y.name
-        }))
-        , markedForDelete: false
-        , newlyAddedQuiz: false
-        , naiveQuizChecksum: this.generateNaiveQuizChecksum(x)
-      }));      
+      this.quizzes = quizzes.map((x) => ({
+        quizName: x.name,
+        quizQuestions: x.questions.map((y) => ({
+          questionName: y.name,
+        })),
+        markedForDelete: false,
+        newlyAddedQuiz: false,
+        naiveQuizChecksum: this.generateNaiveQuizChecksum(x),
+      }));
 
       this.loading = false;
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
       this.errorLoadingQuizzes = true;
-      this.loading = false;      
+      this.loading = false;
     }
   };
 
@@ -101,82 +114,71 @@ export class AppComponent implements OnInit {
   selectQuiz = (q: QuizDisplay) => {
     this.selectedQuiz = q;
     console.log(this.selectedQuiz);
+    this.detailsFromLeftAnimationState = "finalPosition";
   };
 
   addNewQuiz = () => {
-
     const newQuiz = {
-      quizName: "Untitled Quiz"
-      , quizQuestions: []
-      , markedForDelete: false
-      , newlyAddedQuiz: true
-      , naiveQuizChecksum: ""
+      quizName: 'Untitled Quiz',
+      quizQuestions: [],
+      markedForDelete: false,
+      newlyAddedQuiz: true,
+      naiveQuizChecksum: '',
     };
 
-    this.quizzes = [
-      ...this.quizzes
-      , newQuiz
-    ];
+    this.quizzes = [...this.quizzes, newQuiz];
 
     this.selectQuiz(newQuiz);
   };
 
   addNewQuestion = () => {
-    
     if (this.selectedQuiz) {
       this.selectedQuiz.quizQuestions = [
-        ...this.selectedQuiz.quizQuestions
-        , {
-          questionName: "Untitled Question"
-        }
+        ...this.selectedQuiz.quizQuestions,
+        {
+          questionName: 'Untitled Question',
+        },
       ];
     }
   };
 
   removeQuestion = (questionToRemove: QuestionDisplay) => {
     if (this.selectedQuiz) {
-      this.selectedQuiz.quizQuestions = this.selectedQuiz.quizQuestions.filter(x => x !== questionToRemove);
+      this.selectedQuiz.quizQuestions = this.selectedQuiz.quizQuestions.filter(
+        (x) => x !== questionToRemove
+      );
     }
   };
 
-
   jsPromisesOne = () => {
     const n = this.quizSvc.getMagicNumber(true);
-    console.log(n); // ? ? ? 
+    console.log(n); // ? ? ?
 
-    n.then(
-      number => {
-        console.log(number);
+    n.then((number) => {
+      console.log(number);
 
-        const n2 = this.quizSvc.getMagicNumber(true);
-        console.log(n2); // ? ? ?
-        
-        n2.then(x => console.log(x)).catch(e => console.error(e));
-      }
-    ).catch(
-      err => {
-        console.error(err);
-      }
-    )
+      const n2 = this.quizSvc.getMagicNumber(true);
+      console.log(n2); // ? ? ?
+
+      n2.then((x) => console.log(x)).catch((e) => console.error(e));
+    }).catch((err) => {
+      console.error(err);
+    });
   };
 
   jsPromisesTwo = async () => {
-
     try {
       const x = await this.quizSvc.getMagicNumber(true);
       console.log(x); // ? ? ?
 
       const y = await this.quizSvc.getMagicNumber(true);
       console.log(y); // ? ? ?
-    }
-    
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
   };
 
   jsPromisesThree = async () => {
-
     try {
       const x = this.quizSvc.getMagicNumber(true);
       console.log(x); // ? ? ?
@@ -187,9 +189,7 @@ export class AppComponent implements OnInit {
       const results = await Promise.all([x, y]);
       // const results = await Promise.race([x, y]);
       console.log(results); // ? ? ?
-    }
-    
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
   };
@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
   };
 
   getDeletedQuizzes = () => {
-    return this.quizzes.filter(x => x.markedForDelete);
+    return this.quizzes.filter((x) => x.markedForDelete);
   };
 
   get deletedQuizCount() {
@@ -208,22 +208,31 @@ export class AppComponent implements OnInit {
   }
 
   getAddedQuizzes = () => {
-    return this.quizzes.filter(x => x.newlyAddedQuiz && !x.markedForDelete);
+    return this.quizzes.filter((x) => x.newlyAddedQuiz && !x.markedForDelete);
   };
 
   get addedQuizCount() {
     return this.getAddedQuizzes().length;
   }
-  
+
   getEditedQuizzes = () => {
-    return this.quizzes.filter(x => 
-      x.quizName + x.quizQuestions.map(y => '~' + y.questionName).join('') !== x.naiveQuizChecksum
-      && !x.newlyAddedQuiz 
-      && !x.markedForDelete
+    return this.quizzes.filter(
+      (x) =>
+        x.quizName +
+          x.quizQuestions.map((y) => '~' + y.questionName).join('') !==
+          x.naiveQuizChecksum &&
+        !x.newlyAddedQuiz &&
+        !x.markedForDelete
     );
   };
 
   get editedQuizCount() {
     return this.getEditedQuizzes().length;
   }
+
+  detailsFromLeftAnimationState = 'leftPosition';
+
+  detailsFromLeftAnimationDone = () => {
+    this.detailsFromLeftAnimationState = 'leftPosition';
+  };
 }
