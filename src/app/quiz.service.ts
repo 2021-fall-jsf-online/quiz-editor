@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { FUNCTION_TYPE } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 
 export interface QuizFromWeb {
@@ -21,8 +22,30 @@ export class QuizService {
 
     const quizzesFromWeb = this.angularHttpClient.get<QuizFromWeb[]>(
       'https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Mike%20Barnett'
-      );
+    ).toPromise();
 
     return quizzesFromWeb;
   };
+
+  getMagicNumber = (callerWantsToSucceed: boolean): Promise<number> => {
+    return new Promise<number>(
+      (resolve, reject) => {
+
+        //
+        // Some fancy long running code here...
+        //
+
+        // Ultimately resolve if successful.
+        if (callerWantsToSucceed) {
+          resolve(42);
+        }
+        // Or reject if failure.
+        else {
+          reject("Error");
+        }
+      }
+    );
+  };
+
 }
+
