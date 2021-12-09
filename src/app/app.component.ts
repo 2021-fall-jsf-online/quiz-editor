@@ -160,4 +160,11 @@ export class AppComponent implements OnInit {
     
   };
 
+  getDeleteQuizzes= () =>{
+    return this.quizzes.filter(x => x.markedForDelete);
+  };
+
+  get deleteQuizCount() {
+    return this.getDeleteQuizzes().length;
+  };
 }
