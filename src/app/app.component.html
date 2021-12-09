@@ -58,7 +58,7 @@
           Save
           <span 
             class="badge badge-danger ml-1"
-            *ngIf="deleteQuizCount"
+            *ngIf="deleteQuizCount > 0"
           >
             -{{ deleteQuizCount }}
           </span>
@@ -68,6 +68,12 @@
         >
           +{{ addedQuizCount }}
         </span>
+        <span 
+        class="badge badge-light ml-1"
+        *ngIf="editedQuizCount > 0"
+      >
+        *{{ editedQuizCount }}
+      </span>
 
         </button>
         <button 
