@@ -60,8 +60,15 @@
             class="badge badge-danger ml-1"
             *ngIf="deletedQuizCount > 0"
           >
-            {{ deletedQuizCount }}
-        </span>
+            -{{ deletedQuizCount }}
+          </span>
+          <span 
+          class="badge badge-success ml-1"
+          *ngIf="addedQuizCount > 0"
+          >
+            +{{ addedQuizCount }}
+          </span>
+
         </button>
         <button 
           class="btn btn-link"
