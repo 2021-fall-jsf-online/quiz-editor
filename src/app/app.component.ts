@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { QuizService, QuizFromWeb } from './quiz.service';
 
 interface QuizDisplay {
@@ -25,37 +24,32 @@ export class AppComponent implements OnInit {
   ) {
   }
   errorLoadingQuizzes = false;
-  ngOnInit() {
-    const quizzes = this.quizSvc.loadQuizzes();
-    console.log(quizzes);
+  quizzesLoading = false;
 
-    quizzes.subscribe(
-      (data: QuizFromWeb[]) => {
-        this.quizzes = data.map(x => ({
-          quizName: x.name
-          , quizQuestions: x.questions.map(y => ({
-            questionName: y.name
-          }))
-          , markedForDelete: false
+  loadQuizzesFromCloud = async() => {
+    try {
+      this.quizzesLoading = true;
+      const quizzes = await this.quizSvc.loadQuizzes();
+      this.quizzes = quizzes.map(x => ({
+        quizName: x.name
+        , quizQuestions: x.questions.map(y => ({
+          questionName: y.name
         }))
-      }
-      , err => {
-            console.error(err.error);
-            this.errorLoadingQuizzes = true;
-      }
-    );
+        , markedForDelete: false
+      }))
+      this.quizzesLoading = false;
+    }
+    catch(err){
+      console.error(err);
+      this.quizzesLoading = false;
+      this.errorLoadingQuizzes = true;
+      
+    }
 
+  }
+  ngOnInit() {
+    this.loadQuizzesFromCloud();
 
-
-    // this.quizzes = quizzes.map(x => ({
-    //   quizName: x.name
-    //   , quizQuestions: x.questions.map((y: any) => ({
-    //     questionName: y.name
-    //   }))
-    //   , markedForDelete: false
-    // }));
-
-    console.log(this.quizzes);
   }
 
   quizzes: QuizDisplay[] = [];
